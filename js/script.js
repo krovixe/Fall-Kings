@@ -55,21 +55,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-// === Videos in der Galerie unterstützen ===
+// === Videos in der Galerie automatisch unterstützen ===
 document.querySelectorAll(".gallery-item img").forEach(img => {
     const src = img.src;
 
-    // Wenn eine Video-Datei geladen wurde → ersetze IMG durch VIDEO
+    // Prüfen ob die Datei ein Video ist
     if (src.match(/\.(mp4|mov|webm|avi|mkv)(\?|$)/i)) {
 
         const video = document.createElement("video");
+
         video.src = src;
-        video.controls = true;
+        video.autoplay = true;
+        video.loop = true;
+        video.muted = true;       // wichtig für Autoplay
+        video.playsInline = true; // wichtig für mobile Geräte
         video.preload = "metadata";
+
+        // gleiche Darstellung wie Bilder
         video.style.width = "100%";
         video.style.height = "100%";
         video.style.objectFit = "cover";
-
+        video.style.display = "block";
+        
+        // IMG durch VIDEO ersetzen
         img.replaceWith(video);
     }
 });
+
+
